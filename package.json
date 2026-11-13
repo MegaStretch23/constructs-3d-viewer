@@ -1,0 +1,1 @@
+{"name":"constructs-3d-viewer","version":"0.1.0","description":"Static Three.js viewer: put product cards in a 3D void, arrange them, save a PNG.","type":"module","license":"MIT","scripts":{"test":"node test/spawn.test.mjs","start":"python3 -m http.server 8080"}}

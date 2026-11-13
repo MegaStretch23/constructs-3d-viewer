@@ -1,0 +1,16 @@
+import assert from "node:assert/strict";
+import { spawnItem, removeItem, moveItem, scaleItem, clampScale, SCALE_MIN, SCALE_MAX } from "../js/spawn.js";
+import { wrapLines } from "../js/cards.js";
+import { readFileSync } from "node:fs";
+const p = { id: "a", title: "A" }; let it = [];
+for (let i = 0; i < 20; i++) it = spawnItem(it, p, i);
+assert.equal(it.length, 20); assert.equal(new Set(it.map((i) => i.uid)).size, 20);
+const pts = it.map((i) => [i.x, i.z]); for (let i = 0; i < pts.length; i++) for (let j = i + 1; j < pts.length; j++) assert.ok(Math.hypot(pts[i][0] - pts[j][0], pts[i][1] - pts[j][1]) > 0.5);
+assert.throws(() => spawnItem([], { id: "x" }));
+assert.equal(clampScale(99), SCALE_MAX); assert.equal(clampScale(0), SCALE_MIN); assert.equal(clampScale("nope"), 1);
+assert.equal(moveItem(it, it[0].uid, 99, -99)[0].x, 9); assert.equal(scaleItem(it, it[1].uid, 2)[1].scale, 2);
+assert.equal(removeItem(it, it[0].uid).length, 19);
+const l = wrapLines((t) => t.length * 10, "one two three four five six seven eight nine ten", 80, 3); assert.equal(l.length, 3); assert.ok(l[2].endsWith("…"));
+const c = JSON.parse(readFileSync(new URL("../data/catalog.json", import.meta.url))); assert.equal(c.products.length, 28);
+for (const q of c.products) assert.ok(q.id && q.title && q.price > 0 && /^https:\/\/www\.etsy\.com\/listing\/\d+/.test(q.url));
+console.log("ok");
