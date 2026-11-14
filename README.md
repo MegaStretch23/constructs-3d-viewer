@@ -1,3 +1,5 @@
+Moved: https://github.com/MegaStretch23/construct3d
+
 # constructs-3d-viewer
 
 A static Three.js page that puts product cards into a dark 3D "void". Click a product in the list and it appears as a card (posters as slim frames, everything else as a slim box); drag it across the floor, scroll over it to resize it, orbit the camera, and save the arrangement as a PNG. No build step, no framework, no server code: `three` r170 is vendored in `vendor/`, the cards are drawn on a 2D canvas from your title and price (no invented artwork), and everything runs in the browser.
